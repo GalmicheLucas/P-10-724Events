@@ -19,24 +19,32 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  // ajout de last ici
+  const [last, setLast] = useState(null);
+
   const getData = useCallback(async () => {
     try {
-      setData(await api.loadData());
+      const jsonData = await api.loadData();
+      setData(jsonData);
+      const lastEvent = jsonData.events[jsonData.events.length - 1];
+      setLast(lastEvent);
     } catch (err) {
       setError(err);
     }
   }, []);
+
   useEffect(() => {
     if (data) return;
     getData();
-  });
-  
+  }, [data, getData]);
+// ajout de last ici
   return (
     <DataContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
+     // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         data,
         error,
+        last,
       }}
     >
       {children}
@@ -46,7 +54,7 @@ export const DataProvider = ({ children }) => {
 
 DataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
 export const useData = () => useContext(DataContext);
 

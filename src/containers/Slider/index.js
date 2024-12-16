@@ -7,19 +7,25 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-  );
+// Modification 
+const byDateDesc = data?.focus.sort((evtA, evtB) =>
+  new Date(evtB.date) - new Date(evtA.date)
+);
+  // ajout de -1 et de 3 car on a 3 événements dans le tableau Focus
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+      () => setIndex(index <  3 -1 ? index + 1 : 0),
       5000
     );
   };
   useEffect(() => {
     nextCard();
   });
+  const handleRadioChange = (radioIdx) => {
+    setIndex(radioIdx); // Mettre à jour l'état avec l'index sélectionné
+  };
   return (
+    
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
         <>
@@ -38,14 +44,17 @@ const Slider = () => {
               </div>
             </div>
           </div>
-          <div className="SlideCard__paginationContainer">
+          <div className="SlideCard__paginationContainer" >
             <div className="SlideCard__pagination">
-              {byDateDesc.map((_, radioIdx) => (
+              {byDateDesc?.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                // Modification
+                  key={radioIdx.id}
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  // ajout de checked et de onChange
+                  checked={index === radioIdx}
+                  onChange={() => handleRadioChange(radioIdx)}
                 />
               ))}
             </div>
