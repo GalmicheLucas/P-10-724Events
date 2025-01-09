@@ -114,46 +114,51 @@ const Page = () => {
       </div>
     </main>
     <footer className="row">
-      <div className="col presta">
-        <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
-      </div>
-      <div className="col contact">
-        <h3>Contactez-nous</h3>
-        <address>45 avenue de la République, 75000 Paris</address>
-        <div>01 23 45 67 89</div>
-        <div>contact@724events.com</div>
-        <div>
-          <a href="#twitch">
-            <Icon name="twitch" />
-          </a>
-          <a href="#facebook">
-            <Icon name="facebook" />
-          </a>
-          <a href="#twitter">
-            <Icon name="twitter" />
-          </a>
-          <a href="#youtube">
-            <Icon name="youtube" />
-          </a>
-        </div>
-      </div>
-      <div className="col description">
-        <Logo size="large" />
-        <p>
-          Une agence événementielle propose des prestations de service
-          spécialisées dans la conception et l&apos;organisation de divers événements
-          tels que des événements festifs, des manifestations sportives et
-          culturelles, des événements professionnels
-        </p>
-      </div>
-    </footer>
+  <div className="col presta">
+    <h3>Notre dernière prestation</h3>
+    {last && last.title ? (
+      <EventCard
+        imageSrc={last.cover}
+        title={last.title}
+        date={last.date ? new Date(last.date) : null}
+        small
+        label="boom"
+      />
+    ) : (
+      <p>Aucune prestation récente disponible.</p>
+    )}
+  </div>
+  <div className="col contact">
+    <h3>Contactez-nous</h3>
+    <address>45 avenue de la République, 75000 Paris</address>
+    <div>01 23 45 67 89</div>
+    <div>contact@724events.com</div>
+    <div>
+      <a href="#twitch">
+        <Icon name="twitch" />
+      </a>
+      <a href="#facebook">
+        <Icon name="facebook" />
+      </a>
+      <a href="#twitter">
+        <Icon name="twitter" />
+      </a>
+      <a href="#youtube">
+        <Icon name="youtube" />
+      </a>
+    </div>
+  </div>
+  <div className="col description">
+    <Logo size="large" />
+    <p>
+      Une agence événementielle propose des prestations de service
+      spécialisées dans la conception et l&apos;organisation de divers événements
+      tels que des événements festifs, des manifestations sportives et
+      culturelles, des événements professionnels
+    </p>
+  </div>
+</footer>
+
   </>
 }
 
